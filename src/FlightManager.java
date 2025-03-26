@@ -9,11 +9,8 @@ public class FlightManager extends FlightDistance {
 
     //        ************************************************************ Fields ************************************************************
     private final Flight flight = new Flight();
-    private double distanceInKm;
-    private List<Customer> listOfRegisteredCustomersInAFlight;
-    private int customerIndex;
     private static int nextFlightDay = 0;
-    private static final List<FlightManager> FLIGHT_MANAGER_LIST = new ArrayList<>();
+    private static final List<Flight> FLIGHTS = new ArrayList<>();
 
     //        ************************************************************ Behaviours/Methods ************************************************************
 
@@ -37,18 +34,6 @@ public class FlightManager extends FlightDistance {
      * @param gate
      efrom where passengers will board to the aircraft
      */
-    FlightManager(String flightSchedule, String flightNumber, int numOfSeatsInTheFlight, String[][] chosenDestinations, String[] distanceBetweenTheCities, String gate) {
-        this.flight.flightSchedule = flightSchedule;
-        this.flight.flightNumber = flightNumber;
-        this.flight.numOfSeatsInTheFlight = numOfSeatsInTheFlight;
-        this.flight.fromWhichCity = chosenDestinations[0][0];
-        this.flight.toWhichCity = chosenDestinations[1][0];
-        this.flight.distanceInMiles = Double.parseDouble(distanceBetweenTheCities[0]);
-        this.distanceInKm = Double.parseDouble(distanceBetweenTheCities[1]);
-        this.flight.flightTime = calculateFlightTime(flight.distanceInMiles);
-        this.listOfRegisteredCustomersInAFlight = new ArrayList<>();
-        this.flight.gate= gate;
-    }
 
     /**
      * Creates Flight Schedule. All methods of this class are collaborating with each other
@@ -63,8 +48,9 @@ public class FlightManager extends FlightDistance {
             String flightSchedule = createNewFlightsAndTime();
             String flightNumber = r1.randomFlightNumbGen(2, 1).toUpperCase();
             int numOfSeatsInTheFlight = r1.randomNumOfSeats();
+            String flightTime = calculateFlightTime(Double.parseDouble(distanceBetweenTheCities[0]));
             String gate= r1.randomFlightNumbGen(1, 30);
-            FLIGHT_MANAGER_LIST.add(new FlightManager(flightSchedule, flightNumber, numOfSeatsInTheFlight, chosenDestinations, distanceBetweenTheCities, gate.toUpperCase()));
+            FLIGHTS.add(new Flight(flightSchedule, flightNumber, numOfSeatsInTheFlight, chosenDestinations, distanceBetweenTheCities, flightTime, gate.toUpperCase()));
         }
     }
 
@@ -74,7 +60,7 @@ public class FlightManager extends FlightDistance {
      * @param customer customer to be registered
      */
     void addNewCustomerToFlight(Customer customer) {
-        this.listOfRegisteredCustomersInAFlight.add(customer);
+        this.flight.listOfRegisteredCustomersInAFlight.add(customer);
     }
 
     /**
@@ -83,9 +69,9 @@ public class FlightManager extends FlightDistance {
      * @param customer     customer in which tickets are to be added
      * @param numOfTickets number of tickets to add
      */
-    void addTicketsToExistingCustomer(Customer customer, int numOfTickets) {
-        customer.addExistingFlightToCustomerList(customerIndex, numOfTickets);
-    }
+//    void addTicketsToExistingCustomer(Customer customer, int numOfTickets) {
+//        customer.addExistingFlightToCustomerList(customerIndex, numOfTickets);
+//    }
 
     /***
      * Checks if the specified customer is already registered in the FLight's array list
@@ -93,17 +79,17 @@ public class FlightManager extends FlightDistance {
      * @param customer specified customer to be checked
      * @return true if the customer is already registered in the said flight, false otherwise
      */
-    boolean isCustomerAlreadyAdded(List<Customer> customersList, Customer customer) {
-        boolean isAdded = false;
-        for (Customer customer1 : customersList) {
-            if (customer1.getUserID().equals(customer.getUserID())) {
-                isAdded = true;
-                customerIndex = customersList.indexOf(customer1);
-                break;
-            }
-        }
-        return isAdded;
-    }
+//    boolean isCustomerAlreadyAdded(List<Customer> customersList, Customer customer) {
+//        boolean isAdded = false;
+//        for (Customer customer1 : customersList) {
+//            if (customer1.getUserID().equals(customer.getUserID())) {
+//                isAdded = true;
+//                customerIndex = customersList.indexOf(customer1);
+//                break;
+//            }
+//        }
+//        return isAdded;
+//    }
 
     /**
      * Calculates the flight time, using avg. ground speed of 450 knots.
@@ -145,30 +131,13 @@ public class FlightManager extends FlightDistance {
      *
      * @return flight arrival time
      */
-    public String fetchArrivalTime() {
-        /*These lines convert the String of flightSchedule to LocalDateTIme and add the arrivalTime to it....*/
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy, HH:mm a ");
-        LocalDateTime departureDateTime = LocalDateTime.parse(flight.flightSchedule, formatter);
 
-        /*Getting the Flight Time, plane was in air*/
-        String[] flightTime = getFlightTime().split(":");
-        int hours = Integer.parseInt(flightTime[0]);
-        int minutes = Integer.parseInt(flightTime[1]);
-
-
-        LocalDateTime arrivalTime;
-
-        arrivalTime = departureDateTime.plusHours(hours).plusMinutes(minutes);
-        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("EE, dd-MM-yyyy HH:mm a");
-        return arrivalTime.format(formatter1);
-
-    }
 
     void deleteFlight(String flightNumber) {
         boolean isFound = false;
-        Iterator<FlightManager> list = FLIGHT_MANAGER_LIST.iterator();
+        Iterator<Flight> list = FLIGHTS.iterator();
         while (list.hasNext()) {
-            FlightManager flightManager = list.next();
+            Flight flightManager = list.next();
             if (flightManager.getFlightNumber().equalsIgnoreCase(flightNumber)) {
                 isFound = true;
                 break;
@@ -216,15 +185,15 @@ public class FlightManager extends FlightDistance {
 
     public void displayFlightSchedule() {
 
-        Iterator<FlightManager> flightIterator = FLIGHT_MANAGER_LIST.iterator();
+        Iterator<Flight> flightIterator = FLIGHTS.iterator();
         System.out.println();
         System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+------------------------+\n");
-        System.out.printf("| Num  | FLIGHT SCHEDULE\t\t\t   | FLIGHT NO | Available Seats  | \tFROM ====>>       | \t====>> TO\t   | \t    ARRIVAL TIME       | FLIGHT TIME |  GATE  |   DISTANCE(MILES/KMS)  |%n");
+        System.out.printf("| Num  | FLIGHT SCHEDULE\t\t\t\t\t   | FLIGHT NO | Available Seats  | \tFROM ====>>       | \t====>> TO\t   | \t    ARRIVAL TIME       | FLIGHT TIME |  GATE  |   DISTANCE(MILES/KMS)  |%n");
         System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+------------------------+\n");
         int i = 0;
         while (flightIterator.hasNext()) {
             i++;
-            FlightManager f1 = flightIterator.next();
+            Flight f1 = flightIterator.next();
             System.out.println(f1.toString(i));
              System.out.print("+------+-------------------------------------------+-----------+------------------+-----------------------+------------------------+---------------------------+-------------+--------+------------------------+\n");
         }
@@ -232,7 +201,7 @@ public class FlightManager extends FlightDistance {
 
     @Override
     public String toString(int i) {
-        return String.format("| %-5d| %-41s | %-9s | \t%-9s | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  |  %-8s / %-11s|", i, flight.flightSchedule, flight.flightNumber, flight.numOfSeatsInTheFlight, flight.fromWhichCity, flight.toWhichCity, fetchArrivalTime(), flight.flightTime, flight.gate, flight.distanceInMiles, distanceInKm);
+        return String.format("| %-5d| %-41s | %-9s | \t%-9s | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  |  %-8s / %-11s|", i, flight.flightSchedule, flight.flightNumber, flight.numOfSeatsInTheFlight, flight.fromWhichCity, flight.toWhichCity, flight.flightTime, flight.gate, flight.distanceInMiles, flight.distanceInKm);
     }
 
     /**
@@ -292,12 +261,12 @@ public class FlightManager extends FlightDistance {
         return flight.flightTime;
     }
 
-    public List<FlightManager> getFlightList() {
-        return FLIGHT_MANAGER_LIST;
+    public List<Flight> getFlightList() {
+        return FLIGHTS;
     }
 
     public List<Customer> getListOfRegisteredCustomersInAFlight() {
-        return listOfRegisteredCustomersInAFlight;
+        return flight.listOfRegisteredCustomersInAFlight;
     }
 
     public String getFlightSchedule() {

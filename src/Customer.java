@@ -11,7 +11,7 @@ public class Customer {
     private final String password;
     private String address;
     private int age;
-    public List<FlightManager> flightsRegisteredByUser;
+    public List<Flight> flightsRegisteredByUser;
     public List<Integer> numOfTicketsBookedByUser;
     public static final List<Customer> customerCollection = User.getCustomersCollection();
 
@@ -253,7 +253,7 @@ public class Customer {
      *
      * @param f flight to associate
      */
-    void addNewFlightToCustomerList(FlightManager f) {
+    void addNewFlightToCustomerList(Flight f) {
         this.flightsRegisteredByUser.add(f);
         // numOfFlights++;
     }
@@ -272,7 +272,7 @@ public class Customer {
     // ************************************************************ Setters &
     // Getters ************************************************************
 
-    public List<FlightManager> getFlightsRegisteredByUser() {
+    public List<Flight> getFlightsRegisteredByUser() {
         return flightsRegisteredByUser;
     }
 
