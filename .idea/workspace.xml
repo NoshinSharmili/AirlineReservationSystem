@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="390bab40-a7cb-44a1-8f16-3fe8c16b6c34" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DisplayClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DisplayClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlightManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FlightDistance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlightDistance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FlightReservation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlightReservation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Flight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FlightManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FlightManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +25,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2ul3bwZssIVGk4Xbrbxe37Odmok" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

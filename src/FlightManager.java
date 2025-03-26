@@ -8,9 +8,8 @@ import java.util.*;
 public class FlightManager extends FlightDistance {
 
     //        ************************************************************ Fields ************************************************************
-
+    private Flight flight = new Flight();
     private final String flightSchedule;
-    private final String flightNumber;
     private final String fromWhichCity;
     private final String gate;
     private final String toWhichCity;
@@ -27,7 +26,7 @@ public class FlightManager extends FlightDistance {
 
     FlightManager() {
         this.flightSchedule = null;
-        this.flightNumber = null;
+        this.flight.flightNumber = null;
         this.numOfSeatsInTheFlight = 0;
         toWhichCity = null;
         fromWhichCity = null;
@@ -38,7 +37,7 @@ public class FlightManager extends FlightDistance {
      * Creates new random flight from the specified arguments.
      *
      * @param flightSchedule           includes departure date and time of flight
-     * @param flightNumber             unique identifier of each flight
+     * @param flight.flightNumber             unique identifier of each flight
      * @param numOfSeatsInTheFlight    available seats in the flight
      * @param chosenDestinations       consists of origin and destination airports(cities)
      * @param distanceBetweenTheCities gives the distance between the airports both in miles and kilometers
@@ -46,7 +45,7 @@ public class FlightManager extends FlightDistance {
      */
     FlightManager(String flightSchedule, String flightNumber, int numOfSeatsInTheFlight, String[][] chosenDestinations, String[] distanceBetweenTheCities, String gate) {
         this.flightSchedule = flightSchedule;
-        this.flightNumber = flightNumber;
+        this.flight.flightNumber = flightNumber;
         this.numOfSeatsInTheFlight = numOfSeatsInTheFlight;
         this.fromWhichCity = chosenDestinations[0][0];
         this.toWhichCity = chosenDestinations[1][0];
@@ -239,7 +238,7 @@ public class FlightManager extends FlightDistance {
 
     @Override
     public String toString(int i) {
-        return String.format("| %-5d| %-41s | %-9s | \t%-9s | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  |  %-8s / %-11s|", i, flightSchedule, flightNumber, numOfSeatsInTheFlight, fromWhichCity, toWhichCity, fetchArrivalTime(), flightTime, gate, distanceInMiles, distanceInKm);
+        return String.format("| %-5d| %-41s | %-9s | \t%-9s | %-21s | %-22s | %-10s  |   %-6sHrs |  %-4s  |  %-8s / %-11s|", i, flightSchedule, flight.flightNumber, numOfSeatsInTheFlight, fromWhichCity, toWhichCity, fetchArrivalTime(), flightTime, gate, distanceInMiles, distanceInKm);
     }
 
     /**
@@ -288,7 +287,7 @@ public class FlightManager extends FlightDistance {
     }
 
     public String getFlightNumber() {
-        return flightNumber;
+        return flight.flightNumber;
     }
 
     public void setNoOfSeatsInTheFlight(int numOfSeatsInTheFlight) {
