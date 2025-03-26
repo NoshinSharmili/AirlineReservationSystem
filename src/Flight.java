@@ -1,6 +1,7 @@
 import java.util.List;
 
 public class Flight {
+    String flightSchedule;
     String flightNumber;
     String fromWhichCity;
     String gate;
